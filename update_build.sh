@@ -7,21 +7,17 @@ BRANCH="main"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="${SCRIPT_DIR}/.."
 
-cd "$ROOT_DIR"
-
+echo "Running update_build.sh from $ROOT_DIR"
 echo "[app-update] Fetching latest $BRANCH from origin..."
 git fetch origin "$BRANCH"
 
 LOCAL_SHA="$(git rev-parse "$BRANCH")"
 REMOTE_SHA="$(git rev-parse "origin/$BRANCH")"
 
-if [ "$LOCAL_SHA" = "$REMOTE_SHA" ]; then
-    echo "[app-update] Up to date ($BRANCH @ $LOCAL_SHA)"
-    exit 0
+if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
+    echo "[app-update] Updating $BRANCH from $LOCAL_SHA to $REMOTE_SHA..."
+    git pull --rebase origin "$BRANCH"
 fi
-
-echo "[app-update] Updating $BRANCH from $LOCAL_SHA to $REMOTE_SHA..."
-git pull --rebase origin "$BRANCH"
 
 echo "[app-update] Configuring CMake..."
 cmake -B build -G Ninja
