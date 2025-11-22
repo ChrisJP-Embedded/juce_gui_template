@@ -1,0 +1,6 @@
+[submodule "cmake-includes"]
+	path = modules/cmake-includes
+	url = https://github.com/sudara/cmake-includes.git
+[submodule "JUCE"]
+	path = modules/JUCE
+	url = https://github.com/juce-framework/JUCE.git
