@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(pi_juce_gui VERSION 0.1.0)
+project(juce_app VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,34 +17,34 @@ set(JUCE_PATH "${CMAKE_SOURCE_DIR}/modules/JUCE")
 add_subdirectory(${JUCE_PATH} JUCE)
 
 # JUCE GUI app target
-juce_add_gui_app(pi_juce_gui
-    PRODUCT_NAME "Pi JUCE GUI"
+juce_add_gui_app(juce_app
+    PRODUCT_NAME "app"
     VERSION "0.1.0"
 )
 
-juce_generate_juce_header(pi_juce_gui)
+juce_generate_juce_header(juce_app)
 
-target_sources(pi_juce_gui
+target_sources(juce_app
     PRIVATE
         app/src/Main.cpp
         app/src/MainComponent.cpp
         app/inc/MainComponent.h
 )
 
-target_include_directories(pi_juce_gui
+target_include_directories(juce_app
     PRIVATE
         app/inc
 )
 
-target_compile_definitions(pi_juce_gui
+target_compile_definitions(juce_app
     PRIVATE
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:pi_juce_gui,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:pi_juce_gui,JUCE_VERSION>"
+        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:juce_app,JUCE_PRODUCT_NAME>"
+        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:juce_app,JUCE_VERSION>"
 )
 
-target_link_libraries(pi_juce_gui
+target_link_libraries(juce_app
     PRIVATE
         juce::juce_gui_extra
         juce::juce_gui_basics
